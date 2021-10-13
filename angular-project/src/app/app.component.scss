@@ -1,0 +1,7 @@
+p {
+  color: red;
+}
+
+:host ::ng-deep p{
+  color: red;
+}

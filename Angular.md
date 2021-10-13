@@ -39,7 +39,6 @@ Permet de générer un projet angular et de manipuler les fichiers du projet.
 ## Directives
 
 Les directives sont des sélecteurs d'éléments d'une vue. Ils nous permettent de manipuler (modifier les attributs class, styles, etc... & afficher l'élément sur la vue).
-
 Ces directives sont des classes Typescript/Javascript décorées par `@Directives()`
 
 ```ts
@@ -79,6 +78,26 @@ export class TodoListComponent {
 }
 
 ```
+
+-- Abstraction des styles appliqués au composant
+
+Tout style défini sur un composant est encapsulé(n'est appliqué que sur les éléments du composant) sur le composant, lui même. Ces styles ne s'étendent pas au parent , ni aux composants enfants de ce dernier.
+
+-- Le selecteur :host
+
+Selecteur faisant référence à l'élément/composant dans sa feuille de style.
+
+-- ::ng-deep
+
+Sélecteur permettant d'étendre les propriétés css déclarées dans la feuille de style composant à ces enfants.
+
+### Le cycle de vie des composant
+
+OnInit, AfterViewInit, OnChanges, OnDestroy
+
+### Affichage des élement sur la vue
+
+Pour afficher la valeur d'une variable sur une vue Angular on utilisae l'opération de double interpolation: {{ <VARIABLE> }}
 
 ## Pipes
 
