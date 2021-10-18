@@ -1,4 +1,39 @@
-
 <h2>{{ appName }}</h2>
 <!-- (paramChange)="todoListParam = $event" -->
-<app-todo-list (click)="onClick()" [(param)]="todoListParam"></app-todo-list>
+<app-todo-list (click)="onClick()" [(param)]="todoListParam">
+  <p>Helo World!</p>
+</app-todo-list>
+
+<!-- <button
+  [attr.aria-label]="'Label'"
+  [class]="showPrimaryButton ? 'btn btn-primary' : 'btn btn-danger'"
+>
+  HELLO WORLD
+</button> -->
+
+<!-- <p *ngIf="showParagraph" appChangeText [ngStyle]="paragraphStyle">
+  {{ 'Hello! Angular Starter Project' | case}}
+</p> -->
+
+<p appChangeText [ngStyle]="paragraphStyle">
+  {{ 'Hello! Angular Starter Project' | case: 'uppercase' }}
+</p>
+
+<p> {{ today | date:'YYYY-MM-DDTHH:mm:ss.sssZ' }}</p>
+
+<ng-container
+  *ngFor="let user of users; let index = index; trackBy: trackByItems"
+>
+  <p>===============================</p>
+  <p>User {{ index }}</p>
+  <p>Name : {{ user?.name }}</p>
+  <p>Lastname : {{ user?.lastname }}</p>
+  <p>University : {{ user?.university }}</p>
+  <p>FAC : {{ user?.fac }}</p>
+  <p>===============================</p>
+</ng-container>
+
+<!-- <div [ngSwitch]="conditionExpression">
+  <div *ngSwitchCase="expression">output</div>
+  <div *ngSwitchDefault>output2</div>
+</div> -->

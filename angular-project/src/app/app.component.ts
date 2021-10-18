@@ -6,11 +6,37 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
-
   title = 'angular-starter-project';
   appName: string = 'TOO LIST APP';
 
-  todoListParam: {title: string} =  {title: 'TODO LIST HEADER'};
+  todoListParam: { title: string } = { title: 'TODO LIST HEADER' };
+
+  public showPrimaryButton = false;
+
+  public paragraphStyle = {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    lineHeight: '1.5rem',
+  };
+
+  public showParagraph = false;
+
+  public users: { [index: string]: any }[] = [
+    {
+      name: 'GHISLAIN',
+      lastname: 'KOUDJRAMASSAN',
+      university: 'UNIVERSITE DE LOME',
+      fac: 'CIC',
+    },
+    {
+      name: 'CODJOVI GUILLAUME',
+      lastname: 'HOUNKPATI',
+      university: 'IAI',
+      fac: "SYSTEM D'INFORMATION",
+    },
+  ];
+
+  today = new Date();
 
   async ngOnInit() {
     // try {
@@ -18,6 +44,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     // } catch (error) {
     //   console.error(error);
     // }
+    const timeout = setTimeout(() => {
+      this.showParagraph = true;
+      clearTimeout(timeout);
+    }, 10000);
   }
 
   ngAfterViewInit(): void {
@@ -38,11 +68,13 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  trackByItems(index: number, item: { [index: string]: any }): string {
+    return item.lastname;
+  }
 
   onClick() {
     console.log('TODO LIST CLICKED');
   }
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 }

@@ -93,13 +93,149 @@ Sélecteur permettant d'étendre les propriétés css déclarées dans la feuill
 
 ### Le cycle de vie des composant
 
-OnInit, AfterViewInit, OnChanges, OnDestroy
+OnInit, AfterViewInit, OnChanges, OnDestroy.
 
 ### Affichage des élement sur la vue
 
 Pour afficher la valeur d'une variable sur une vue Angular on utilisae l'opération de double interpolation: {{ <VARIABLE> }}
 
+### Communication entre les composants
+
+Les décorateur `@Input()` et `@Output()` offrent un API permettant au dévéloppeurs d'interagir avec les propriétes d'un composant et au composant de notifier son environment externe.
+
+- @Input()
+
+Le décorateur `@Input()` permet au dévéloppeur d'exposer une/des propriété(s) du composant à l'environment HTML
+dans lequel le composant est utilisé.
+Cela permet aux utilisateur du composant de passer/d'associer des valeurs aux propriétés du composant.
+
+```ts
+// Syntax
+// @Input([attribut]) property[: <TYPE>] [= <VALUE>];
+
+@Component({
+  selector: 'app-button'
+  //...
+})
+export class ButtonComponent {
+  // Example
+  @Input() disabled: boolean;
+}
+```
+
+```html
+<app-button [disabled]="true"> </app-button>
+```
+
+## Directives (Pure directives)
+
+### Attribute directives
+
+- Built-In directives
+
+  * ngStyle
+  * ngClass
+
+```html
+<button [class]="user.isAuthenticated ? 'auth-user' : 'not-auth-user'"></button>
+```
+
+Note: La plupart des attributs des élements du DOM, peuvent être passé comme directive.
+
+- Custom directives
+
+
+```ts
+import { Directive, ElementRef, HostListener } from '@angular/core';
+
+@Directive({
+  selector: '[appChangeText]'
+})
+export class ChangeTextOnHoverDirective {
+
+  constructor(private element: ElementRef) { }
+
+  // Le décorateur @HostListener() permet d'écouter un évenement sur l'élément
+  // référencé
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    (this.element.nativeElement as HTMLElement).innerHTML = 'TEXT CHANGED';
+    (this.element.nativeElement as HTMLElement).style.fontSize = '32px';
+  }
+
+}
+
+```
+
+### Structural directives
+
+- Built-in attributes (Attributs inclus dans le framework)
+
+  * ngIf
+  * ngFor
+  * ngSwitch
+
+```ts
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+
+// Décorateur - Fonction typescript ou Javascript qui ajoute des données descriptives (métadonnées) à une classe, une propriété de classe, ou une autre fonction
+@Directive({
+  selector: '[unless]',
+})
+export class UnlessDirective {
+  private _hasView = false;
+  @Input('unless') set unless(condition: boolean) {
+    if (!condition && !this._hasView) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+      this._hasView = true;
+    } else if (condition && this._hasView) {
+      this.viewContainer.clear();
+      this._hasView = false;
+    }
+  }
+
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef
+  ) {}
+}
+```
+
 ## Pipes
+
+Les pipes (Transformatteurs) sont des class décorées avec le décorateur `@Pipe` qui expose une fonction de transformation d'une valeur sur la vue.
+
+Pour générer un pipe avec le @angular/cli:
+
+> ng g pipe <Chemin/Vers/Fichier/Pipe>
+
+```ts
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'case'
+})
+export class CasePipe implements PipeTransform {
+
+transform(value: string, _case?: string): string {
+    if (typeof value === 'number') {
+      throw new Error('Invalid parameter passed!!');
+    }
+    _case = _case || 'uppercase'; // UPPERCASE // LOWERCASE
+    switch (_case?.toLocaleLowerCase()) {
+      case 'uppercase':
+        return value?.toUpperCase();
+      case 'lowercase':
+        return value?.toLocaleLowerCase();
+      default:
+        return value;
+        // throw new Error('Undefined case');
+    }
+  }
+
+}
+
+```
 
 ## Services
 
