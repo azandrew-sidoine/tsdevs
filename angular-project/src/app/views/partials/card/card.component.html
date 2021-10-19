@@ -1,0 +1,14 @@
+<div class="card">
+  <!-- CARD TITLE -->
+  <ng-content select="[title]"></ng-content>
+  <div class="card-body">
+    <div class="content">
+      <!-- CARD CONTENT -->
+      <ng-content select="[content]"></ng-content>
+    </div>
+    <div class="card-footer">
+      <!-- CARD FOOTER -->
+      <ng-content select="[footer]"></ng-content>
+    </div>
+  </div>
+</div>

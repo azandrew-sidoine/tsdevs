@@ -1,8 +1,8 @@
 <h2>{{ appName }}</h2>
 <!-- (paramChange)="todoListParam = $event" -->
-<app-todo-list (click)="onClick()" [(param)]="todoListParam">
+<!-- <app-todo-list (click)="onClick()" [(param)]="todoListParam">
   <p>Helo World!</p>
-</app-todo-list>
+</app-todo-list> -->
 
 <!-- <button
   [attr.aria-label]="'Label'"
@@ -15,13 +15,13 @@
   {{ 'Hello! Angular Starter Project' | case}}
 </p> -->
 
-<p appChangeText [ngStyle]="paragraphStyle">
+<!-- <p appChangeText [ngStyle]="paragraphStyle">
   {{ 'Hello! Angular Starter Project' | case: 'uppercase' }}
 </p>
 
-<p> {{ today | date:'YYYY-MM-DDTHH:mm:ss.sssZ' }}</p>
+<p>{{ today | date: 'YYYY-MM-DDTHH:mm:ss.sssZ' }}</p> -->
 
-<ng-container
+<!-- <ng-container
   *ngFor="let user of users; let index = index; trackBy: trackByItems"
 >
   <p>===============================</p>
@@ -31,9 +31,32 @@
   <p>University : {{ user?.university }}</p>
   <p>FAC : {{ user?.fac }}</p>
   <p>===============================</p>
-</ng-container>
+</ng-container> -->
 
 <!-- <div [ngSwitch]="conditionExpression">
   <div *ngSwitchCase="expression">output</div>
   <div *ngSwitchDefault>output2</div>
 </div> -->
+
+<!-- <app-card>
+  <app-card-title
+    title
+    class="card-title"
+    title
+    [title]="'APP CARD TITLE'"
+  ></app-card-title>
+  <app-card-content [content]="'APP CONTENT'" content></app-card-content>
+  <app-card-footer [footer]="'APP FOOTER'" footer></app-card-footer>
+</app-card> -->
+
+<!-- select="[attribue]"-->
+<!-- select="element"-->
+<!-- select="element.className"-->
+
+<ng-container *ngIf="talkObservable2$ | async as talk">
+  <p> {{ talk }} </p>
+</ng-container>
+
+<ng-container *ngIf="numberOrSubsribers$ | async as total">
+  <p> Subscribers: {{ total }} </p>
+</ng-container>

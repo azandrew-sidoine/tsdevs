@@ -1,5 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { interval, Observable, Subject } from 'rxjs';
+import { map, takeUntil, takeWhile, tap } from 'rxjs/operators';
 
+const LIMIT = 20000;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -38,16 +41,49 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   today = new Date();
 
-  async ngOnInit() {
-    // try {
-    //   this.title = await this.fetchFromDatabase();
-    // } catch (error) {
-    //   console.error(error);
-    // }
+  talkObservable$ = new Observable<string>(observer => {
+    let index = 0;
+    const interval = setInterval(() => {
+      ++index;
+      // Production de la donnée
+      observer.next(`Talking for the ${index} time!`);
+    }, 1000);
+
     const timeout = setTimeout(() => {
-      this.showParagraph = true;
+      observer.next("Talking for the last time!");
+      // Cloturer la production
+      observer.complete();
       clearTimeout(timeout);
+      clearInterval(interval);
     }, 10000);
+  });
+
+  // Création d'un suject
+  endTalkSubject$ = new Subject();
+
+  talkObservable2$ =  interval(1000).pipe(
+    takeUntil(this.endTalkSubject$),
+    tap(state => {
+      if (state >= 10) {
+        this.endTalkSubject$.next();
+      }
+    }),
+    map(state => `Talking for the ${state} time!`),
+  );
+
+  private _numberOfSubscribers = 0;
+
+  numberOrSubsribers$ = interval(.3).pipe(
+    takeWhile(state => this._numberOfSubscribers <= LIMIT),
+    map(_ => ++this._numberOfSubscribers),
+  );
+
+  async ngOnInit() {
+
+    // Souscription a la production de la donnée
+    // this.talkObservable$.subscribe(value => console.log(value));
+
+    // this.talkObservable2$.subscribe(value => console.log(value));
   }
 
   ngAfterViewInit(): void {
