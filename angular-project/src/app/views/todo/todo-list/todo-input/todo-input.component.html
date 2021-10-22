@@ -1,0 +1,10 @@
+<ng-container>
+  <input
+    clrInput
+    placeholder="Saisir..."
+    (ngModelChange)="labelChange.emit($event)"
+    name="label"
+    [disabled]="performingAction ? true : false"
+    [ngModel]="label"
+  />
+</ng-container>

@@ -47,7 +47,7 @@ export class TodoService {
           });
           resolve(true);
           clearTimeout(timeout);
-        }, 3000);
+        }, 1000);
       })
     );
   }
@@ -55,6 +55,10 @@ export class TodoService {
   update(id: number | string, todo: Partial<Todo>) {
     return from(
       new Promise<boolean>((resolve, reject) => {
+        this.uiState$.next({
+          performingAction: true,
+          message: 'UPDATING TODO',
+        });
         const timeout = setTimeout(() => {
           const cache = this._todos$.getValue();
           let index = cache.findIndex((todo) => +todo.id === +id);
@@ -69,6 +73,10 @@ export class TodoService {
           } else {
             resolve(false);
           }
+          this.uiState$.next({
+            performingAction: false,
+            message: undefined,
+          });
           clearTimeout(timeout);
         }, 1000);
       })

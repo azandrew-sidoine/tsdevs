@@ -8,29 +8,22 @@
         <ng-container *ngIf="todos$ | async as todos">
           <ul class="todo-container">
             <ng-container *ngFor="let todo of todos; let last = last">
-              <li class="todo-element">
-                <span class="todo-label">{{ todo?.label }}</span>
-                <span class="todo-date badge badge-success">
-                  {{ todo?.createdAt | date }}
-                </span>
-                <span
-                  [class]="
-                    todo?.completed ? 'todo-completed' : 'todo-not-completed'
-                  "
-                ></span>
-              </li>
+              <!-- APP TODO ELEMENT VIEW COMPONENT -->
+              <app-todo-view
+                (completedChange)="onTodoCompletedChange(todo, $event)"
+                [todo]="todo"
+              ></app-todo-view>
+              <!--\ APP TODO ELEMENT VIEW COMPONENT -->
               <div class="separator" *ngIf="!last"></div>
             </ng-container>
           </ul>
         </ng-container>
-        <ng-container>
-          <input
-            clrInput
-            placeholder="Saisir..."
-            name="label"
-            [(ngModel)]="label"
-          />
-        </ng-container>
+        <!-- APP TODO INPUT -->
+        <app-todo-input
+          [performingAction]="(uistate$ | async)?.performingAction"
+          [(label)]="label"
+        ></app-todo-input>
+        <!--\ APP TODO INPUT -->
       </div>
       <div class="card-footer">
         <button

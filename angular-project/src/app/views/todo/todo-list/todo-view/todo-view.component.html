@@ -1,0 +1,20 @@
+<li class="todo-element" [ngClass]="{'completed' : todo?.completed}">
+  <clr-checkbox-wrapper class="custom-wrapper">
+    <input
+      type="checkbox"
+      clrCheckbox
+      name="completed"
+      required
+      value="true"
+      (ngModelChange)="onCompletedModelChange($event)"
+      [ngModel]="completed"
+    />
+    <label class="todo-label">{{ todo?.label }}</label>
+  </clr-checkbox-wrapper>
+  <span class="todo-date">
+    {{ todo?.createdAt | date }}
+  </span>
+  <span
+    [class]="todo?.completed ? 'todo-completed' : 'todo-not-completed'"
+  ></span>
+</li>

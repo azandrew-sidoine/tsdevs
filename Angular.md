@@ -1,5 +1,4 @@
 # Angular
-
 * UI Framework
 * MVVM === MVC -> Model View (View Model) -> Model View (Controller)
 
@@ -103,7 +102,7 @@ Pour afficher la valeur d'une variable sur une vue Angular on utilisae l'opérat
 
 Les décorateur `@Input()` et `@Output()` offrent un API permettant au dévéloppeurs d'interagir avec les propriétes d'un composant et au composant de notifier son environment externe.
 
-- @Input()
+* @Input()
 
 Le décorateur `@Input()` permet au dévéloppeur d'exposer une/des propriété(s) du composant à l'environment HTML
 dans lequel le composant est utilisé.
@@ -131,10 +130,10 @@ export class ButtonComponent {
 
 ### Attribute directives
 
-- Built-In directives
+* Built-In directives
 
-  * ngStyle
-  * ngClass
+  + ngStyle
+  + ngClass
 
 ```html
 <button [class]="user.isAuthenticated ? 'auth-user' : 'not-auth-user'"></button>
@@ -142,8 +141,7 @@ export class ButtonComponent {
 
 Note: La plupart des attributs des élements du DOM, peuvent être passé comme directive.
 
-- Custom directives
-
+* Custom directives
 
 ```ts
 import { Directive, ElementRef, HostListener } from '@angular/core';
@@ -169,11 +167,11 @@ export class ChangeTextOnHoverDirective {
 
 ### Structural directives
 
-- Built-in attributes (Attributs inclus dans le framework)
+* Built-in attributes (Attributs inclus dans le framework)
 
-  * ngIf
-  * ngFor
-  * ngSwitch
+  + ngIf
+  + ngFor
+  + ngSwitch
 
 ```ts
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
@@ -246,7 +244,7 @@ Il nous permet d'isoler une implémentation du reste de notre application et d'e
 
 Pour créer un module:
 
-- Using angular/cli
+* Using angular/cli
 
 > ng g module </path/to/module>
 
@@ -289,12 +287,12 @@ export class TaskModule {
 [https://angular.io/guide/architecture-services]
 
 Les services sont des classes dédiées à l'implémentation de fonctionnalités specifiques.
-Ils décorés par `@Injectable()`.
+Ils décorés par `@Injectable()` .
 
 Les service ont aussi un cycle de vie que nous pourrions écouter en utilisant les interface
 Ces cycles de vie sont:
 
-  * OnDestroy()
+  + OnDestroy()
 
 ```ts
 import { Injectable } from '@angular/core';
@@ -309,14 +307,101 @@ export class TodoService {
 
 ```
 
-- Injection des services
+* Injection des services
 
 Le framework angular la recherche des serice à injecter effectue une opération à 3 Niveaux:
 
-- R1 -> Consiste à rechercher le service dans les `providers` du composant l'utilisant.
-- R2 -> La recherche au niveau 2 consiste à rechercher le service dans les providers du composant parent ou dans les providers de tout composant dans l'hierarchie
-- R3 -> Consiste à rechercher le service dans le module dans lequel le composant est déclaré comme élement de la vue, ou éventuellement dans les modules parentes à cet module.
+* R1 -> Consiste à rechercher le service dans les `providers` du composant l'utilisant.
+* R2 -> La recherche au niveau 2 consiste à rechercher le service dans les providers du composant parent ou dans les providers de tout composant dans l'hierarchie
+* R3 -> Consiste à rechercher le service dans le module dans lequel le composant est déclaré comme élement de la vue, ou éventuellement dans les modules parentes à cet module.
 
 Règle:
 
-- Si le service maintient un état devant ête modifier au cours de l'éxécution de votre application, portez sa déclaration dans le module principale.
+* Si le service maintient un état devant ête modifier au cours de l'éxécution de votre application, portez sa déclaration dans le module principale.
+
+-- Injection par création
+
+[https://refactoring.guru/fr/design-patterns/creational-patterns]
+
+L'injection par création s'inspire de la technique du patron de création.
+Le dévéloppeur déclare dans le DI d'angular une fonction de création qui crée et retourne l'instance de la classe à injectée.
+
+```js
+// ... Module definition
+
+// ... Imports
+
+@NgModule({
+    // ...
+    providers: [{
+        provide: < Interface | Classe >,
+        useFactory: () => {
+            // Créer et retourner l'instance
+        },
+        deps: [ < Dependances > ]
+    }]
+})
+export class ModuleName {}
+```
+
+-- Injection par association Interface - Classe
+
+Cette technique d'injection permet au DI d'Angular de fournir une instance d'une classe lorsqu'une interface est demandée.
+
+Note: Dû à la perte de la notion de type, lorsque le code source est compilé en Javascript, ce type d'injection requiert la création au préable d'une constante (Token d'injection) qui sera l'implémentation utilisé par les utilisateur de notre module.
+
+```ts
+// Fichier tokens.ts
+import {InjectionToken} from '@angular/core';
+
+export const NOM_TOKEN = new InjectionToken<Type>(
+  'DESCRIPTION DU TOKEN'
+);
+
+// Module
+@NgModule({
+  // ...
+  providers: [
+    {
+      provide: <NOM_TOKEN>,
+      useClass: <Classe>,
+    }
+  ]
+})
+export class ModuleName {}
+
+// Nous pourrions utiliser cette association avec une fonction de création
+
+// Module
+@NgModule({
+  // ...
+  providers: [
+    {
+      provide: <NOM_TOKEN>,
+      useFactory: () => {
+        // Créer et retourner l'instance
+      },
+      deps: [<Dependances>]
+    }
+  ]
+})
+export class ModuleName {}
+```
+
+-- Injection d'une valeur
+
+Ce type d'injection nous permet de fournir une valeur primitive à la demande.
+
+```ts
+// Module
+@NgModule({
+  // ...
+  providers: [
+    {
+      provide: <NOM_TOKEN>,
+      useValue: <VALEUR_A_FOURNIR>
+    }
+  ]
+})
+export class ModuleName {}
+```

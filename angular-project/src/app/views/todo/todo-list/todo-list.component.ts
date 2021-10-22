@@ -1,12 +1,15 @@
 import {
   Component,
   EventEmitter,
+  HostListener,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { tap } from 'rxjs/operators';
+import { Todo } from 'src/app/bloc/models/task';
 import { TodoService } from '../todo.service';
 
 @Component({
@@ -18,12 +21,23 @@ import { TodoService } from '../todo.service';
   // ]
 })
 export class TodoListComponent implements OnInit, OnChanges {
-  public todos$ = this.service.todos$;
+  public todos$ = this.service.todos$.pipe(
+    tap((state) => console.log('TODO STATE: ', state))
+  );
   public uistate$ = this.service.uiState$;
   public today = new Date();
 
   // Model binded to ngModel
-  label!: string | undefined;
+  label!: string;
+
+  // #region Listeners
+  @HostListener('keyup.enter')
+  onKeyPress(event: string) {
+    if (this.label && this.label !== '') {
+      this.onAddButtonClick();
+    }
+  }
+  // #endregion Listeners
 
   constructor(private service: TodoService) {}
 
@@ -31,13 +45,26 @@ export class TodoListComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {}
 
-  async onAddButtonClick() {
-    // TODO: Ouvrir un modal d'ajout
+  async onTodoCompletedChange(element: Todo, value: boolean) {
+    console.log('UPDATING :', element?.id);
+    // UPDATE TODO ELEMENT
     await this.service
-      .create({
-        label: this.label,
+      .update(element.id, {
+        completedAt: new Date(),
+        completed: true,
       })
       .toPromise();
-    this.label = undefined;
+  }
+
+  async onAddButtonClick() {
+    // TODO: Ouvrir un modal d'ajout
+    if (this.label && this.label !== '') {
+      await this.service
+        .create({
+          label: this.label,
+        })
+        .toPromise();
+      this.label = '';
+    }
   }
 }

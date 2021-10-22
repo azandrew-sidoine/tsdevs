@@ -1,0 +1,63 @@
+li.todo-element.completed {
+  text-decoration: line-through;
+}
+
+li.todo-element {
+  list-style-type: none;
+  line-height: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-wrapper {
+  margin-top: .4rem;
+}
+
+span.todo-label {
+  font-weight: 400;
+  font-size: 0.635rem;
+}
+
+.separator {
+  height: 1px;
+  width: 100% !important;
+  background-color: rgb(203, 203, 203);
+}
+
+.todo-completed {
+  // float: right;
+  display: block;
+  width: 16px;
+  height: 16px;
+  margin-top: 12px;
+  border-radius: 50%;
+  position: relative;
+  border: 1px solid lightgreen;
+}
+
+.todo-not-completed {
+  // float: right;
+  display: block;
+  width: 16px;
+  height: 16px;
+  margin-top: 12px;
+  border-radius: 50%;
+  position: relative;
+  border: 1px solid rgb(203, 203, 203);
+}
+
+.todo-not-completed::after {
+  content: "";
+  color: #000;
+  position: absolute;
+  top: -0.616735rem;
+  left: 0.15rem;
+}
+
+.todo-completed::after {
+  content: "✓";
+  color: #000;
+  position: absolute;
+  top: -0.616735rem;
+  left: 0.15rem;
+}

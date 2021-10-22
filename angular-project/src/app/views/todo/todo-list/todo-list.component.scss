@@ -5,68 +5,19 @@
 
 .card {
   margin: auto;
-  width: 420px;
+  width: 520px;
 }
 
-.todo-container {
+@media(max-width: 760px) {
+  .card {
+    width: 320px;
+  }
+}
+
+ul.todo-container {
   display: block;
-}
-
-li.todo-element {
-  list-style-type: none;
-  line-height: 2rem;
-}
-
-span.todo-label,
-span.todo-date {
-  margin: 0 12px 0 0;
-}
-
-span.todo-label {
-  font-weight: 400;
-  font-size: 0.635rem;
-}
-
-.separator {
-  height: 1px;
-  width: 100% !important;
-  background-color: rgb(203, 203, 203);
-}
-
-.todo-completed {
-  float: right;
-  display: block;
-  width: 16px;
-  height: 16px;
-  margin-top: 8px;
-  border-radius: 50%;
-  position: relative;
-  background-color: lightgreen;
-}
-
-.todo-not-completed {
-  float: right;
-  display: block;
-  width: 16px;
-  height: 16px;
-  margin-top: 8px;
-  border-radius: 50%;
-  position: relative;
-  background-color: orange;
-}
-
-.todo-not-completed::after {
-  content: "✓";
-  color: #fff;
-  position: absolute;
-  top: -0.556rem;
-  left: 0.2rem;
-}
-
-.todo-completed::after {
-  content: "✓";
-  color: #fff;
-  position: absolute;
-  top: -0.556rem;
-  left: 0.2rem;
+  min-height: 200px;
+  height: 200px;
+  max-height: 420px;
+  overflow-y: scroll;
 }
