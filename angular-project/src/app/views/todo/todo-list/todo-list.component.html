@@ -1,2 +1,46 @@
-
-<h2>{{ param.title }}</h2>
+<div class="clr-row">
+  <div class="clr-col-12">
+    <div class="card">
+      <div class="card-header">
+        LISTE DES TÂCHES À EXÉCUTER
+      </div>
+      <div class="card-block">
+        <ng-container *ngIf="todos$ | async as todos">
+          <ul class="todo-container">
+            <ng-container *ngFor="let todo of todos; let last = last">
+              <li class="todo-element">
+                <span class="todo-label">{{ todo?.label }}</span>
+                <span class="todo-date badge badge-success">
+                  {{ todo?.createdAt | date }}
+                </span>
+                <span
+                  [class]="
+                    todo?.completed ? 'todo-completed' : 'todo-not-completed'
+                  "
+                ></span>
+              </li>
+              <div class="separator" *ngIf="!last"></div>
+            </ng-container>
+          </ul>
+        </ng-container>
+        <ng-container>
+          <input
+            clrInput
+            placeholder="Saisir..."
+            name="label"
+            [(ngModel)]="label"
+          />
+        </ng-container>
+      </div>
+      <div class="card-footer">
+        <button
+          [disabled]="(uistate$ | async)?.performingAction"
+          (click)="onAddButtonClick()"
+          class="btn btn-sm btn-link"
+        >
+          AJOUTER
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

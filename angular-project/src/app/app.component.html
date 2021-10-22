@@ -1,8 +1,6 @@
-<h2>{{ appName }}</h2>
+<h2 class="text-center">{{ appName }}</h2>
 <!-- (paramChange)="todoListParam = $event" -->
-<!-- <app-todo-list (click)="onClick()" [(param)]="todoListParam">
-  <p>Helo World!</p>
-</app-todo-list> -->
+<app-todo-list></app-todo-list>
 
 <!-- <button
   [attr.aria-label]="'Label'"
@@ -53,10 +51,17 @@
 <!-- select="element"-->
 <!-- select="element.className"-->
 
-<ng-container *ngIf="talkObservable2$ | async as talk">
+<!-- <ng-container *ngIf="talkObservable2$ | async as talk">
   <p> {{ talk }} </p>
 </ng-container>
 
 <ng-container *ngIf="numberOrSubsribers$ | async as total">
   <p> Subscribers: {{ total }} </p>
-</ng-container>
+</ng-container> -->
+
+<!-- <ng-container *ngIf="tasks$ | async as tasks">
+  <ng-container *ngFor="let item of tasks">
+    <p>Task name: {{ item?.label }}</p>
+    <p>Date Création:{{ item?.createAt | date }}</p>
+  </ng-container>
+</ng-container> -->

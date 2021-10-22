@@ -237,10 +237,64 @@ transform(value: string, _case?: string): string {
 
 ```
 
+## Modules
+
+[https://angular.io/guide/architecture-modules]
+
+Un module angular packet regroupant élement de la vue et/ou services dédiés à une tâche spécifique.
+Il nous permet d'isoler une implémentation du reste de notre application et d'exposer des fonctionnalités par des interfaces bien définie.
+
+Pour créer un module:
+
+- Using angular/cli
+
+> ng g module </path/to/module>
+
+```ts
+// Import declaration ...
+
+import {NgModule} from '@angular/core';
+
+@NgModule({
+
+  // Déclaration des élements vue du module
+  declrations: [ TodoListComponent ],
+
+  // Importation d'autre modules
+  import: [
+    // ... Liste des modules à importer
+  ],
+
+  // Les exporations
+  exports: [ TodoListComponent ],
+
+  // Déclaration des services
+  providers: [
+    TodoService
+  ],
+
+  // Les éléments de la vue à charger lorsque le module est initialisé par le framework
+  entryComponents: [
+    // ... 
+  ]
+
+})
+export class TaskModule {
+
+}
+```
+
 ## Services
 
+[https://angular.io/guide/architecture-services]
+
 Les services sont des classes dédiées à l'implémentation de fonctionnalités specifiques.
-Ils décorés par `@Injectable()`
+Ils décorés par `@Injectable()`.
+
+Les service ont aussi un cycle de vie que nous pourrions écouter en utilisant les interface
+Ces cycles de vie sont:
+
+  * OnDestroy()
 
 ```ts
 import { Injectable } from '@angular/core';
@@ -254,3 +308,15 @@ export class TodoService {
 }
 
 ```
+
+- Injection des services
+
+Le framework angular la recherche des serice à injecter effectue une opération à 3 Niveaux:
+
+- R1 -> Consiste à rechercher le service dans les `providers` du composant l'utilisant.
+- R2 -> La recherche au niveau 2 consiste à rechercher le service dans les providers du composant parent ou dans les providers de tout composant dans l'hierarchie
+- R3 -> Consiste à rechercher le service dans le module dans lequel le composant est déclaré comme élement de la vue, ou éventuellement dans les modules parentes à cet module.
+
+Règle:
+
+- Si le service maintient un état devant ête modifier au cours de l'éxécution de votre application, portez sa déclaration dans le module principale.
