@@ -309,7 +309,7 @@ export class TodoService {
 
 * Injection des services
 
-Le framework angular la recherche des serice à injecter effectue une opération à 3 Niveaux:
+Le framework angular recherche des serice à injecter effectue une opération à 3 Niveaux:
 
 * R1 -> Consiste à rechercher le service dans les `providers` du composant l'utilisant.
 * R2 -> La recherche au niveau 2 consiste à rechercher le service dans les providers du composant parent ou dans les providers de tout composant dans l'hierarchie
@@ -319,6 +319,31 @@ Règle:
 
 * Si le service maintient un état devant ête modifier au cours de l'éxécution de votre application, portez sa déclaration dans le module principale.
 
+--- Injection simple
+
+```ts
+// ... Module definition
+
+// ... Imports
+
+@NgModule({
+    // ...
+    providers: [
+      Classe
+    ]
+})
+export class ModuleName {}
+
+// Composant pour injection
+
+export class NomComponent {
+
+    contructor([ACCESS_MODIFIER] variable: Classe) {
+
+    }
+}
+```
+
 -- Injection par création
 
 [https://refactoring.guru/fr/design-patterns/creational-patterns]
@@ -326,7 +351,7 @@ Règle:
 L'injection par création s'inspire de la technique du patron de création.
 Le dévéloppeur déclare dans le DI d'angular une fonction de création qui crée et retourne l'instance de la classe à injectée.
 
-```js
+```ts
 // ... Module definition
 
 // ... Imports
@@ -334,7 +359,7 @@ Le dévéloppeur déclare dans le DI d'angular une fonction de création qui cr�
 @NgModule({
     // ...
     providers: [{
-        provide: < Interface | Classe >,
+        provide: < Classe > ,
         useFactory: () => {
             // Créer et retourner l'instance
         },
@@ -342,11 +367,20 @@ Le dévéloppeur déclare dans le DI d'angular une fonction de création qui cr�
     }]
 })
 export class ModuleName {}
+
+// Composant pour injection
+
+export class NomComponent {
+
+    contructor([ACCESS_MODIFIER] variable: Classe) {
+
+    }
+}
 ```
 
 -- Injection par association Interface - Classe
 
-Cette technique d'injection permet au DI d'Angular de fournir une instance d'une classe lorsqu'une interface est demandée.
+Cette technique d'injection permet au DI (Gestionnaire de dépendance) d'Angular de fournir une instance d'une classe lorsqu'une interface est demandée.
 
 Note: Dû à la perte de la notion de type, lorsque le code source est compilé en Javascript, ce type d'injection requiert la création au préable d'une constante (Token d'injection) qui sera l'implémentation utilisé par les utilisateur de notre module.
 
@@ -386,11 +420,19 @@ export class ModuleName {}
   ]
 })
 export class ModuleName {}
+
+// Injection dans le composant
+// Composant pour injection
+
+export class NomComponent {
+
+  contructor(@Inject(NOM_TOKEN) [ACCESS_MODIFIER] variable: Type) {}
+}
 ```
 
 -- Injection d'une valeur
 
-Ce type d'injection nous permet de fournir une valeur primitive à la demande.
+Ce type d'injection nous permet de fournir une valeur primitive/object à la demande.
 
 ```ts
 // Module

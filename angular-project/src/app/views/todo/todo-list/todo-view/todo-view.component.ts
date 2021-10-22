@@ -25,11 +25,6 @@ export class TodoViewComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const todo = changes['todo'];
     const currentValue = todo.currentValue as Todo;
-    const previousValue = todo.previousValue as Todo;
-    if (previousValue && currentValue.completed !== previousValue?.completed) {
-      this.completed = currentValue.completed;
-    } else {
-      this.completed = currentValue.completed;
-    }
+    this.completed = currentValue.completed;
   }
 }

@@ -12,6 +12,8 @@ import { CardContentComponent } from './views/partials/card/card-content/card-co
 import { CardTitleComponent } from './views/partials/card/card-title/card-title.component';
 import { CardFooterComponent } from './views/partials/card/card-footer/card-footer.component';
 import { TodosModule } from './views/todo/todos.module';
+import { TODO_SERVICE } from './views/todo/constants';
+import { TodoService } from './views/todo/todo.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,12 @@ import { TodosModule } from './views/todo/todos.module';
     ClarityModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: TODO_SERVICE,
+      useClass: TodoService
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

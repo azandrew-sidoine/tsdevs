@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   HostListener,
+  Inject,
   Input,
   OnChanges,
   OnInit,
@@ -10,7 +11,10 @@ import {
 } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { Todo } from 'src/app/bloc/models/task';
-import { TodoService } from '../todo.service';
+import { UI_STATE_MANAGER } from 'src/app/core/ui-state/constants';
+import { UIStateManager } from 'src/app/core/ui-state/contracts/ui-state-service';
+import { TODO_SERVICE } from '../constants';
+import { TodoService } from '../contracts/todo';
 
 @Component({
   selector: 'app-todo-list',
@@ -24,7 +28,7 @@ export class TodoListComponent implements OnInit, OnChanges {
   public todos$ = this.service.todos$.pipe(
     tap((state) => console.log('TODO STATE: ', state))
   );
-  public uistate$ = this.service.uiState$;
+  public uistate$ = this.uiState.uiState$;
   public today = new Date();
 
   // Model binded to ngModel
@@ -39,7 +43,10 @@ export class TodoListComponent implements OnInit, OnChanges {
   }
   // #endregion Listeners
 
-  constructor(private service: TodoService) {}
+  constructor(
+    @Inject(TODO_SERVICE) private service: TodoService,
+    @Inject(UI_STATE_MANAGER) private uiState: UIStateManager
+  ) {}
 
   ngOnInit(): void {}
 
@@ -50,8 +57,8 @@ export class TodoListComponent implements OnInit, OnChanges {
     // UPDATE TODO ELEMENT
     await this.service
       .update(element.id, {
-        completedAt: new Date(),
-        completed: true,
+        completedAt: value === false ? undefined : new Date(),
+        completed: value,
       })
       .toPromise();
   }

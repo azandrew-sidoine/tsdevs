@@ -1,11 +1,13 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
 import { TodoInputComponent } from './todo-list/todo-input/todo-input.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoViewComponent } from './todo-list/todo-view/todo-view.component';
-import { TodoService } from './todo.service';
+import { TodoService, TodoServiceV2 } from './todo.service';
+import { TodoService as TodoServiceInterface } from './contracts/todo';
+import { TODO_SERVICE } from './constants';
 
 @NgModule({
   // Déclaration des élements vue du module
@@ -34,7 +36,24 @@ export class TodosModule {
   static forRoot(): ModuleWithProviders<TodosModule> {
     return {
       ngModule: TodosModule,
-      providers: [TodoService],
+      providers: [
+        // Fourni le service par défaut
+        // TodoService,
+        // Fourni le serive par création
+        // {
+        //   provide: TodoService,
+        //   useFactory: (injector: Injector) => {
+        //     const { defaultView } = injector.get(DOCUMENT);
+        //     return new TodoService(defaultView ?? undefined);
+        //   },
+        //   deps: [Injector],
+        // },
+        // Fourni le service par implémentation
+        // {
+        //   provide: TODO_SERVICE,
+        //   useClass: TodoService,
+        // },
+      ],
     };
   }
 }
