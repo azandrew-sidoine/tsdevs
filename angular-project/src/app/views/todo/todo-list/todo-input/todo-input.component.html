@@ -1,11 +1,20 @@
-<form [formGroup]="model" clrForm>
-  <input
-    clrInput
-    placeholder="Saisir..."
-    formControlName="label"
-  />
+<form [formGroup]="model" clrForm novalidate>
+  <clr-input-container>
+    <input clrInput placeholder="Saisir..." formControlName="label" />
+    <clr-control-error *clrIfError="'required'">
+      Le champ est requis
+    </clr-control-error>
+  </clr-input-container>
   <!-- DATE INPUT -->
   <clr-date-container>
     <input type="date" clrDate formControlName="createdAt" />
+    <clr-control-error *clrIfError="'dateAfter'">
+      Le date doit être supérieur à
+      {{ model.get('createdAt')?.getError('dateAfter') |date:"d/m/y"}}
+    </clr-control-error>
+    <clr-control-error *clrIfError="'dateBefore'">
+      Le date doit être inférieur à
+      {{ model.get('createdAt')?.getError('dateBefore') |date:"d/m/y"}}
+    </clr-control-error>
   </clr-date-container>
 </form>

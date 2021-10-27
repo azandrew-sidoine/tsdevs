@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,10 +6,9 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './todo-input.component.html',
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TodoInputComponent {
-  @Input() label!: string;
-  @Output() labelChange = new EventEmitter<string>();
+export class TodoInputComponent implements OnInit {
   @Input() performingAction!: boolean | undefined;
-  // @Input() model: TodoInputModel = {};
   @Input() model!: FormGroup;
+
+  ngOnInit(): void {}
 }

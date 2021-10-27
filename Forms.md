@@ -320,7 +320,7 @@ formgroup.addControl('control', new FormControl(/*...*/))
 
 ```ts
 // ... 
-formgroup.removeControl('control')
+formgroup.removeControl('control');
 ```
 
 * Récupération de la valeur pure d'un groupe de champ (Uniquement FormGroup)

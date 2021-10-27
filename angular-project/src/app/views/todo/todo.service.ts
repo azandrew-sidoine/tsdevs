@@ -69,14 +69,13 @@ export class TodoService implements TodoServiceInterface {
   create(task: Partial<Todo>) {
     return from(
       new Promise<boolean>((resolve, reject) => {
-        this.uiState.startAction('Creating Todo');
         const timeout = setTimeout(() => {
           // Insert The task to the database
           const task_ = {
             label: task?.label ?? 'UNKNOW',
             id: new Date().getMilliseconds(),
             completed: false,
-            createdAt: new Date(),
+            createdAt: task?.createdAt ? new Date(task?.createdAt) : new Date(),
             completedAt: undefined,
           };
           this._todos$.next([...this._todos$.getValue(), ...[task_]]);
