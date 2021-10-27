@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   HostListener,
@@ -9,17 +10,21 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { tap } from 'rxjs/operators';
 import { Todo } from 'src/app/bloc/models/task';
+import { timeout } from 'src/app/core/rx';
 import { UI_STATE_MANAGER } from 'src/app/core/ui-state/constants';
 import { UIStateManager } from 'src/app/core/ui-state/contracts/ui-state-service';
 import { TODO_SERVICE } from '../constants';
 import { TodoService } from '../contracts/todo';
+import { TodoInputModel } from '../contracts/model';
 
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.scss'],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   // providers: [
   //   TodoService
   // ]
@@ -42,13 +47,37 @@ export class TodoListComponent implements OnInit, OnChanges {
     }
   }
   // #endregion Listeners
+  @Input() model: TodoInputModel = {};
+
+  model$: FormGroup = this.builder.group(
+    {
+      label: [
+        'SE PRÉPARER',
+        Validators.compose([Validators.required, Validators.maxLength(20)]),
+      ],
+      createdAt: [{ value: undefined, disabled: true }, Validators.required],
+    },
+    {
+      updateOn: 'submit',
+    }
+  );
 
   constructor(
     @Inject(TODO_SERVICE) private service: TodoService,
-    @Inject(UI_STATE_MANAGER) private uiState: UIStateManager
+    @Inject(UI_STATE_MANAGER) private uiState: UIStateManager,
+    private builder: FormBuilder
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    timeout(() => {
+      // this.model.label = 'ALLER AU RESTAURANT';
+      // this.model.createdAt = new Date();
+      this.model = {
+        label: 'ALLER AU RESTAURANT',
+        createdAt: new Date(),
+      } as TodoInputModel;
+    }, 2000);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {}
 

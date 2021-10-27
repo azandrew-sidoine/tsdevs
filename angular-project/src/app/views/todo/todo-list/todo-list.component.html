@@ -20,6 +20,7 @@
         </ng-container>
         <!-- APP TODO INPUT -->
         <app-todo-input
+          [model]="model$"
           [performingAction]="(uistate$ | async)?.performingAction"
           [(label)]="label"
         ></app-todo-input>

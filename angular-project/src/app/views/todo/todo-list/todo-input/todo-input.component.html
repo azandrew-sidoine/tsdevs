@@ -1,10 +1,11 @@
-<ng-container>
+<form [formGroup]="model" clrForm>
   <input
     clrInput
     placeholder="Saisir..."
-    (ngModelChange)="labelChange.emit($event)"
-    name="label"
-    [disabled]="performingAction ? true : false"
-    [ngModel]="label"
+    formControlName="label"
   />
-</ng-container>
+  <!-- DATE INPUT -->
+  <clr-date-container>
+    <input type="date" clrDate formControlName="createdAt" />
+  </clr-date-container>
+</form>
