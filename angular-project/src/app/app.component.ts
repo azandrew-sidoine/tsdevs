@@ -39,7 +39,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'angular-starter-project';
   appName: string = 'TOO LIST APP';
   // Sujet de destruction
-  _destroy$ = new Subject();
+  _destroy$ = new Subject<void>();
 
   constructor(private service: TodoService) {}
 

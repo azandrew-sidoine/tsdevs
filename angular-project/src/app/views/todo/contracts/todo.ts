@@ -13,4 +13,6 @@ export interface TodoService {
 
   /// Supprimer une tâche dans notre base de donnée des tâches
   delete(id: number | string): Observable<boolean>;
+
+  getTodos$(): Observable<boolean>;
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UnlessDirective } from './views/partials/directives/unless.directive';
 import { ClarityModule } from '@clr/angular';
@@ -31,6 +31,7 @@ import { TodoService } from './views/todo/todo.service';
     BrowserModule,
     ClarityModule,
     BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [
     {

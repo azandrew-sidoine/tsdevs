@@ -14,6 +14,7 @@ import { TODO_SERVICE } from '../constants';
 import { TodoService } from '../contracts/todo';
 import { DateValidators } from 'src/app/core/utils/validators/date';
 import { substractDate } from 'src/app/core/utils/helpers';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-todo-list',
@@ -40,7 +41,7 @@ export class TodoListComponent implements OnInit, OnChanges {
   model: FormGroup = this.builder.group({
     label: [
       undefined,
-      Validators.compose([Validators.required, Validators.maxLength(20)]),
+      Validators.compose([Validators.required, Validators.maxLength(45)]),
     ],
     createdAt: [
       undefined,
@@ -57,12 +58,8 @@ export class TodoListComponent implements OnInit, OnChanges {
     private builder: FormBuilder
   ) {}
 
-  ngOnInit() {
-    // timeout(() => {
-    //   this.model.markAllAsTouched();
-    //   this.model.get('label')?.markAsDirty();
-    //   this.model.get('label')?.markAsTouched();
-    // }, 2000);
+  async ngOnInit() {
+    await lastValueFrom(this.service.getTodos$());
   }
 
   ngOnChanges(changes: SimpleChanges): void {}
