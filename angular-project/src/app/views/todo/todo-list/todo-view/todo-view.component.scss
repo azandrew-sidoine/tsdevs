@@ -1,5 +1,10 @@
-li.todo-element.completed {
+li.todo-element.completed span, li.todo-element.completed label {
   text-decoration: line-through;
+}
+
+li.todo-element button.trash {
+  text-decoration: none !important;
+  color: red;
 }
 
 li.todo-element {

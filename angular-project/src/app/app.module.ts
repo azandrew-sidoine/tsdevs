@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { UnlessDirective } from './views/partials/directives/unless.directive';
 import { ClarityModule } from '@clr/angular';
@@ -14,6 +18,11 @@ import { CardFooterComponent } from './views/partials/card/card-footer/card-foot
 import { TodosModule } from './views/todo/todos.module';
 import { TODO_SERVICE } from './views/todo/constants';
 import { TodoService } from './views/todo/todo.service';
+import { AuthTokenInterceptorService } from './core/auth';
+import {
+  HTTP_CLIENT,
+  HttpClientModule as CoreHttpClientModule,
+} from './core/http';
 
 @NgModule({
   declarations: [
@@ -31,13 +40,25 @@ import { TodoService } from './views/todo/todo.service';
     BrowserModule,
     ClarityModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    CoreHttpClientModule.forRoot(),
   ],
   providers: [
     {
       provide: TODO_SERVICE,
-      useClass: TodoService
-    }
+      useClass: TodoService,
+    },
+    {
+      // HTTP_INTERCEPTORS
+      // APP_INITIALIZER
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptorService,
+      multi: true,
+    },
+    // {
+    //   provide: HTTP_CLIENT,
+    //   useClass: HttpClient,
+    // },
   ],
   bootstrap: [AppComponent],
 })

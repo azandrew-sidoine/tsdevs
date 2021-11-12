@@ -17,9 +17,14 @@ export class TodoViewComponent implements OnChanges {
   @Input() todo!: Todo;
   @Input() completed!: boolean;
   @Output() completedChange = new EventEmitter<boolean>();
+  @Output() deleteEvent = new EventEmitter<Todo | undefined>();
 
   onCompletedModelChange(event: boolean) {
     this.completedChange.emit(event);
+  }
+
+  onDeleteTodo(event: Todo | undefined) {
+    this.deleteEvent.emit(event);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

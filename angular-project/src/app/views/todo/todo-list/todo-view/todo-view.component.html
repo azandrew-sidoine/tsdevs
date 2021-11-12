@@ -1,4 +1,4 @@
-<li class="todo-element" [ngClass]="{'completed' : todo?.completed}">
+<li class="todo-element" [ngClass]="{ completed: todo?.completed }">
   <clr-checkbox-wrapper class="custom-wrapper">
     <input
       type="checkbox"
@@ -16,4 +16,5 @@
   <span
     [class]="todo?.completed ? 'todo-completed' : 'todo-not-completed'"
   ></span>
+  <button (click)="onDeleteTodo(todo)" class="btn btn-link trash">X</button>
 </li>

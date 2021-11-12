@@ -37,3 +37,6 @@ Le client une méthode base:
 > delete(<URL>, [<PARAMS>]) - Faire une requête /DELETE
 
 ## Examples
+
+
+## Les intercepteurs de requêtes

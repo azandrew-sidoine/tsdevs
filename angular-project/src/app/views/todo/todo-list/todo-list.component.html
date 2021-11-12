@@ -11,6 +11,7 @@
               <!-- APP TODO ELEMENT VIEW COMPONENT -->
               <app-todo-view
                 (completedChange)="onTodoCompletedChange(todo, $event)"
+                (deleteEvent)="onDeleteTodo($event)"
                 [todo]="todo"
               ></app-todo-view>
               <!--\ APP TODO ELEMENT VIEW COMPONENT -->

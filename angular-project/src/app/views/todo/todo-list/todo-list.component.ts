@@ -22,7 +22,7 @@ import { lastValueFrom } from 'rxjs';
   styleUrls: ['./todo-list.component.scss'],
 })
 export class TodoListComponent implements OnInit, OnChanges {
-  public todos$ = this.service.todos$;
+  public todos$ = this.service.todos$.pipe();
   public uistate$ = this.uiState.uiState$;
 
   // Model binded to ngModel
@@ -66,12 +66,18 @@ export class TodoListComponent implements OnInit, OnChanges {
 
   async onTodoCompletedChange(element: Todo, value: boolean) {
     // UPDATE TODO ELEMENT
-    await this.service
-      .update(element.id, {
+    await lastValueFrom(
+      this.service.update(element.id, {
         completedAt: value === false ? undefined : new Date(),
         completed: value,
       })
-      .toPromise();
+    );
+  }
+
+  async onDeleteTodo(todo: Todo | undefined) {
+    if (todo) {
+      await lastValueFrom(this.service.delete(todo?.id));
+    }
   }
 
   async onAddButtonClick() {
