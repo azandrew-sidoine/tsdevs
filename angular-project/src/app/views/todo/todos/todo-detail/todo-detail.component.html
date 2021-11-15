@@ -1,0 +1,9 @@
+<div class="todo-detail-container" *ngIf="todo">
+  <span class="todo-label">
+    {{ todo?.label }}
+  </span>
+
+  <span class="todo-date">
+    {{ todo?.createdAt | date }}
+  </span>
+</div>

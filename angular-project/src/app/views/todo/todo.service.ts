@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, from, interval, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import {
   filter,
   map,

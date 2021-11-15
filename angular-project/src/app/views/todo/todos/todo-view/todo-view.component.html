@@ -10,7 +10,7 @@
     />
     <label class="todo-label">{{ todo?.label }}</label>
   </clr-checkbox-wrapper>
-  <span class="todo-date">
+  <span class="todo-date" (click)="elementClicked.emit(todo)">
     {{ todo?.createdAt | date }}
   </span>
   <span

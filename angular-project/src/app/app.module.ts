@@ -23,6 +23,9 @@ import {
   HTTP_CLIENT,
   HttpClientModule as CoreHttpClientModule,
 } from './core/http';
+import { AppRoutingModule } from './app-routing.module';
+import { AboutComponent } from './views/about/about.component';
+import { App404Component } from './views/404/404.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,8 @@ import {
     CardContentComponent,
     CardTitleComponent,
     CardFooterComponent,
+    AboutComponent,
+    App404Component,
   ],
   imports: [
     TodosModule.forRoot(),
@@ -42,6 +47,7 @@ import {
     BrowserAnimationsModule,
     HttpClientModule,
     CoreHttpClientModule.forRoot(),
+    AppRoutingModule,
   ],
   providers: [
     {
@@ -55,10 +61,10 @@ import {
       useClass: AuthTokenInterceptorService,
       multi: true,
     },
-    // {
-    //   provide: HTTP_CLIENT,
-    //   useClass: HttpClient,
-    // },
+    {
+      provide: HTTP_CLIENT,
+      useClass: HttpClient,
+    },
   ],
   bootstrap: [AppComponent],
 })

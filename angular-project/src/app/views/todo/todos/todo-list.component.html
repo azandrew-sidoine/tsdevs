@@ -10,6 +10,7 @@
             <ng-container *ngFor="let todo of todos; let last = last">
               <!-- APP TODO ELEMENT VIEW COMPONENT -->
               <app-todo-view
+                (elementClicked)="onTodoSelected($event)"
                 (completedChange)="onTodoCompletedChange(todo, $event)"
                 (deleteEvent)="onDeleteTodo($event)"
                 [todo]="todo"

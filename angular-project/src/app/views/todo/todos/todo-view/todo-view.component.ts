@@ -18,6 +18,7 @@ export class TodoViewComponent implements OnChanges {
   @Input() completed!: boolean;
   @Output() completedChange = new EventEmitter<boolean>();
   @Output() deleteEvent = new EventEmitter<Todo | undefined>();
+  @Output() elementClicked = new EventEmitter<Todo | undefined>();
 
   onCompletedModelChange(event: boolean) {
     this.completedChange.emit(event);

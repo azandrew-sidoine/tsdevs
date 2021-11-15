@@ -15,6 +15,7 @@ import { TodoService } from '../contracts/todo';
 import { DateValidators } from 'src/app/core/utils/validators/date';
 import { substractDate } from 'src/app/core/utils/helpers';
 import { lastValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-todo-list',
@@ -55,7 +56,10 @@ export class TodoListComponent implements OnInit, OnChanges {
   constructor(
     @Inject(TODO_SERVICE) private service: TodoService,
     @Inject(UI_STATE_MANAGER) private uiState: UIStateManager,
-    private builder: FormBuilder
+    private builder: FormBuilder,
+    // Service permettant de naviger entre vos composants
+    // et modules
+    private router: Router
   ) {}
 
   async ngOnInit() {
@@ -91,5 +95,10 @@ export class TodoListComponent implements OnInit, OnChanges {
       await this.service.create(this.model.getRawValue()).toPromise();
       this.model.reset();
     }
+  }
+
+  onTodoSelected(todo: Todo | undefined) {
+    console.log('Clicked...');
+    this.router.navigate(['todos', todo?.id]);
   }
 }

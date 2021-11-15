@@ -1,6 +1,29 @@
-<h2 class="text-center">{{ appName }}</h2>
+<div class="main-container doc-demo-main-container">
+  <header class="header-6">
+    <div class="branding">
+      <a (click)="onNavigateToTodosComponent($event)">
+        <span class="title">{{ appName }}</span>
+      </a>
+    </div>
+
+    <!-- NAVIGATION DEFINITIONS -->
+    <div class="header-nav">
+      <a routerLink="todos" routerLinkActive="active" class="nav-link nav-text">
+        Todos
+      </a>
+      <a routerLink="about" routerLinkActive="active" class="nav-link nav-text">
+        About
+      </a>
+    </div>
+  </header>
+  <div class="content-container">
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
 <!-- (paramChange)="todoListParam = $event" -->
-<app-todo-list></app-todo-list>
+<!-- <app-todo-list></app-todo-list> -->
 
 <!-- <button
   [attr.aria-label]="'Label'"

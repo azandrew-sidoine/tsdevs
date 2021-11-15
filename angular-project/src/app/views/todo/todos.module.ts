@@ -2,16 +2,22 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
-import { TodoInputComponent } from './todo-list/todo-input/todo-input.component';
-import { TodoListComponent } from './todo-list/todo-list.component';
-import { TodoViewComponent } from './todo-list/todo-view/todo-view.component';
+import { TodoDetailComponent } from './todos/todo-detail/todo-detail.component';
+import { TodoInputComponent } from './todos/todo-input/todo-input.component';
+import { TodoListComponent } from './todos/todo-list.component';
+import { TodoViewComponent } from './todos/todo-view/todo-view.component';
 // import { TodoService, TodoServiceV2 } from './todo.service';
 // import { TodoService as TodoServiceInterface } from './contracts/todo';
 // import { TODO_SERVICE } from './constants';
 
 @NgModule({
   // Déclaration des élements vue du module
-  declarations: [TodoListComponent, TodoInputComponent, TodoViewComponent],
+  declarations: [
+    TodoListComponent,
+    TodoDetailComponent,
+    TodoInputComponent,
+    TodoViewComponent,
+  ],
 
   // Importation d'autre modules
   imports: [

@@ -17,6 +17,7 @@ import {
 } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { TodoService } from './views/todo/todo.service';
+import { Router } from '@angular/router';
 
 function filterMap(
   filterCallback: (value: number) => boolean,
@@ -41,7 +42,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   // Sujet de destruction
   _destroy$ = new Subject<void>();
 
-  constructor(private service: TodoService) {}
+  constructor(private service: TodoService, private router: Router) {}
 
   async ngOnInit() {
     const list$ = of([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -77,6 +78,16 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onClick() {
     console.log('TODO LIST CLICKED');
+  }
+
+  onNavigateToTodosComponent(event: Event) {
+    // Navigation par URL
+    this.router.navigateByUrl(`/todos`, {
+      skipLocationChange: true
+    });
+    // Navigation par fragment
+    // this.router.navigate(['/todos']);
+    event?.preventDefault();
   }
 
   ngOnDestroy(): void {
